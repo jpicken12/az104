@@ -1,1 +1,2 @@
 # az104
+This project tracks the Scott Duffy [AZ-104 Microsoft Azure Administrator Exam Prep Udemy course](https://www.udemy.com/course/70533-azure/) course and uses Terraform infrastructure-as-code to deploy all the configuration, exercises and labs covered in this course. It is intended as a learning aid as I progress through the course and a way of practically applying my Azure and Terraform knowledge.
