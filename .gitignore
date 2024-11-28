@@ -1,0 +1,24 @@
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Ignore Terraform crash logs
+crash.log
+
+# Ignore sensitive files
+*.tfvars
+
+# Ignore cache and provider files
+.terraform/
+
+# Terraform plan files
+*.tfplan
+
+# JSON output files
+*.json
+
+# Terraform lock file
+.terraform.lock.hcl
+
+# Exported outputs
+output.tfvars
