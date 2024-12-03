@@ -8,6 +8,14 @@ variable "location" {
   default = "uksouth"
 }
 
+variable "management_group_parent" {
+  type = string
+}
+
+variable "management_group_child" {
+  type = set(string)
+}
+
 variable "resource_group_name" {
   type    = string
   default = "az104"
