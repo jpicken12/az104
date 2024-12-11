@@ -1,6 +1,6 @@
 /*
 ####################################################################################################
-# File: mgmtGrpMain.tf
+# File: main.tf
 # Description: Creates a management group structure with a top level group and adds a subscription to the production child managmenet group. 
 #             
 # Author: James Picken
@@ -43,11 +43,12 @@ data "azurerm_management_group" "production" {
   display_name = "Production"
 }
 
-data "azurerm_subscription" "azure_subscription_1" {
-  subscription_id = var.subscription_id
+# Retrive existing policy definition
+data "azurerm_policy_definition" "tagAllResources" {
+  display_name = "Require a tag on resources"
 }
 
-# Resource blocks to create the management groups and assign the provided subscriptionId to the production management group
+# Create the management groups and assign the provided subscriptionId to the production management group
 resource "azurerm_management_group" "parent" {
   display_name = var.management_group_parent
 }
@@ -62,5 +63,17 @@ resource "azurerm_management_group" "child" {
 # Associate subscriptionId with production managment group
 resource "azurerm_management_group_subscription_association" "mgmt_group_assoc" {
   management_group_id = data.azurerm_management_group.production.id
-  subscription_id     = data.azurerm_subscription.azure_subscription_1.id
+  subscription_id     = data.azurerm_subscription.current.id
+}
+
+resource "azurerm_management_group_policy_assignment" "assign_policy" {
+  name                 = "all-tag-policy"
+  policy_definition_id = data.azurerm_policy_definition.tagAllResources.id
+  management_group_id  = azurerm_management_group.parent.id
+
+  parameters = jsonencode({
+    "tagName" = {
+      "value" = "course title"
+    }
+  })
 }
