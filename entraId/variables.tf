@@ -30,3 +30,7 @@ variable "tenant_id" {
   type      = string
   sensitive = true
 }
+
+variable "user_map" {
+  default = jsondecode(file("users.json"))
+}
